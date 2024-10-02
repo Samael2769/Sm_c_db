@@ -7,6 +7,8 @@ void print_prompt();
 void read_input(InputBuffer* input_buffer);
 InputBuffer* new_input_buffer();
 void close_input_buffer(InputBuffer* input_buffer);
-void execute_statement(Statement* statement);
+ExecuteResult execute_statement(Statement* statement, Table* table);
 PrepareResult prepare_statement(InputBuffer* input_buffer, Statement* statement);
-MetaCommandResult do_meta_command(InputBuffer* input_buffer);
+MetaCommandResult do_meta_command(InputBuffer* input_buffer, Table* table);
+
+Table* new_table();
