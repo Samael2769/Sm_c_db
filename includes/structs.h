@@ -7,6 +7,10 @@
 #include <string.h>
 #include <stdint.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <errno.h>
 
 #define COLUMN_USERNAME_SIZE 32
 #define COLUMN_EMAIL_SIZE 255
@@ -52,9 +56,14 @@ typedef struct {
   Row row_to_insert;
 } Statement;
 
-
+typedef struct {
+  int file_descriptor;
+  uint32_t file_length;
+  char* pages[TABLE_MAX_PAGES];
+} Pager;
 
 typedef struct {
   uint32_t num_rows;
-  void* pages[TABLE_MAX_PAGES];
+  Pager* pager;
 } Table;
+

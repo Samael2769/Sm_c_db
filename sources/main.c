@@ -3,8 +3,18 @@
 #include "functions.h"
 
 int main(int argc, char* argv[]) {
-  InputBuffer* input_buffer = new_input_buffer();
-  Table *table = new_table();
+
+  if (argc < 2) {
+    printf("Must supply a database filename.\n");
+    exit(EXIT_FAILURE);
+  }
+
+  char* filename = argv[1];
+  Table* table = db_open(filename);
+
+
+
+  InputBuffer* input_buffer = new_input_buffer();  
   while (true) {
     print_prompt();
     read_input(input_buffer);
