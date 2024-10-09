@@ -12,3 +12,8 @@ PrepareResult prepare_statement(InputBuffer* input_buffer, Statement* statement)
 MetaCommandResult do_meta_command(InputBuffer* input_buffer, Table* table);
 
 Table* db_open(const char* filename);
+
+Cursor* table_start(Table* table);
+Cursor* table_end(Table* table);
+void * cursor_value(Cursor *cursor);
+void cursor_advance(Cursor* cursor);
