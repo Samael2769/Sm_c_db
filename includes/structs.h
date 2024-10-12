@@ -25,6 +25,7 @@ typedef struct {
 
 typedef enum {
   EXECUTE_SUCCESS,
+  EXECUTE_DUPLICATE_KEY,
   EXECUTE_TABLE_FULL
 } ExecuteResult;
 
@@ -59,16 +60,23 @@ typedef struct {
 typedef struct {
   int file_descriptor;
   uint32_t file_length;
+  uint32_t num_pages;
   char* pages[TABLE_MAX_PAGES];
 } Pager;
 
 typedef struct {
-  uint32_t num_rows;
   Pager* pager;
+  uint32_t root_page_num;
 } Table;
 
 typedef struct {
   Table* table;
-  uint32_t row_num;
+  uint32_t page_num;
+  uint32_t cell_num;
   bool end_of_table;
 } Cursor;
+
+typedef enum {
+  NODE_INTERNAL,
+  NODE_LEAF
+} NodeType;
