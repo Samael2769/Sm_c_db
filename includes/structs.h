@@ -52,6 +52,7 @@ typedef struct {
   char username[COLUMN_USERNAME_SIZE + 1];
   char email[COLUMN_EMAIL_SIZE + 1];
 } Row;
+
 typedef struct {
   StatementType type;
   Row row_to_insert;
