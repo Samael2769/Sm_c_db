@@ -349,7 +349,7 @@ Cursor* table_find(Table* table, uint32_t key) {
 void * cursor_value(Cursor *cursor) {
   uint32_t page_num = cursor->page_num;
   void *page = get_page(cursor->table->pager, page_num);
-  return leaf_node_cell(page, cursor->cell_num);
+  return leaf_node_value(page, cursor->cell_num);
 }
 
 void cursor_advance(Cursor* cursor) {
