@@ -11,12 +11,21 @@ ExecuteResult execute_statement(Statement* statement, Table* table);
 PrepareResult prepare_statement(InputBuffer* input_buffer, Statement* statement);
 MetaCommandResult do_meta_command(InputBuffer* input_buffer, Table* table);
 
+Pager *pager_open(const char* filename);
+void pager_flush(Pager* pager, uint32_t page_num);
+void db_close(Table* table);
+
+void* get_page(Pager* pager, uint32_t page_num);
+
 Table* db_open(const char* filename);
 
 Cursor* table_start(Table* table);
 Cursor* table_find(Table* table, uint32_t key);
 void * cursor_value(Cursor *cursor);
 void cursor_advance(Cursor* cursor);
+
+void deserialize_row(void* source, Row* destination);
+void serialize_row(Row* source, void* destination);
 
 
 void initialize_leaf_node(void* node);
@@ -52,3 +61,5 @@ void update_internal_node_key(void* node, uint32_t old_key, uint32_t new_key) ;
 uint32_t internal_node_find_child(void* node, uint32_t key);
 void internal_node_insert(Table* table, uint32_t parent_page_num, uint32_t child_page_num);
 void internal_node_split_and_insert(Table* table, uint32_t parent_page_num, uint32_t child_page_num);
+
+void print_row(Row* row);
