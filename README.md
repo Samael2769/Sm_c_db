@@ -10,5 +10,6 @@ make
 #### Testing:
 
 ```
-bundle exec rspec
+make
+make test
 ```
