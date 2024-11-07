@@ -27,7 +27,7 @@ uint32_t * internal_node_child(void* node, uint32_t child_num) {
     printf("Tried to access child_num %d > num_keys %d\n", child_num, num_keys);
     exit(EXIT_FAILURE);
   } else if (child_num == num_keys) {
-    uint32_t * right_child = *internal_node_right_child(node);
+    uint32_t * right_child = internal_node_right_child(node);
     if (*right_child == INVALID_PAGE_NUM) {
       printf("Tried to access right child when it was invalid\n");
       exit(EXIT_FAILURE);
@@ -74,7 +74,6 @@ void internal_node_insert(Table* table, uint32_t parent_page_num, uint32_t child
   uint32_t index = internal_node_find_child(parent, child_max_key);
 
   uint32_t original_num_keys = *internal_node_num_keys(parent);
-  *internal_node_num_keys(parent) = original_num_keys + 1;
 
   if (original_num_keys >= INTERNAL_NODE_MAX_CELLS) {
     internal_node_split_and_insert(table, parent_page_num, child_page_num);
@@ -84,10 +83,12 @@ void internal_node_insert(Table* table, uint32_t parent_page_num, uint32_t child
   uint32_t right_child_page_num = *internal_node_right_child(parent);
 
   if (right_child_page_num == INVALID_PAGE_NUM) {
-    *internal_node_child(parent, original_num_keys) = child_page_num;
+    *internal_node_right_child(parent) = child_page_num;
     return;
   }
   void* right_child = get_page(table->pager, right_child_page_num);
+
+  *internal_node_num_keys(parent) = original_num_keys + 1;
 
   if (child_max_key > get_node_max_key(table->pager, right_child)) {
     *internal_node_child(parent, original_num_keys) = right_child_page_num;

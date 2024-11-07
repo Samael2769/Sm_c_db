@@ -3,7 +3,7 @@ NAME = sm_db
 
 # Compilateur et options
 CC = gcc
-CFLAGS = -Wall -Wextra #-Werror
+CFLAGS = 
 
 # Dossiers des fichiers d'en-tête et sources
 INCLUDES = -I includes
@@ -25,6 +25,9 @@ $(NAME): $(OBJS)
 # Compilation des fichiers objets avec l'inclusion des headers
 $(SRCDIR)%.o: $(SRCDIR)%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+test: all
+	bundle exec rspec
 
 # Règle pour nettoyer les fichiers objets (.o)
 clean:
